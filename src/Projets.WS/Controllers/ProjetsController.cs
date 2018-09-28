@@ -4,7 +4,6 @@ using Projets.Bean;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Projets.WS.Controllers
 {
@@ -24,18 +23,18 @@ namespace Projets.WS.Controllers
         {
             using (var client = manager.GetClient())
             {
-                var redisProjet = client.As<BeanProjet>();
-                var alls = redisProjet.GetAll();
-                return alls.Select(a => string.Concat("/groupesdeprojets/", idgrp, "/projets/", a.Id));
+                var keys = client.SearchKeys(string.Concat("/groupesdeprojets/", idgrp, "/projets/[0-9]*"));
+                return keys;
             }
         }
+
         [HttpGet("{id}")]
         public BeanProjet Get(int idgrp, int id)
         {
             using (var client = manager.GetClient())
             {
-                var redisProjet = client.As<BeanProjet>();
-                var ret = redisProjet.GetById(id);
+                var ret = client.Get<BeanProjet>(
+                     string.Concat("/groupesdeprojets/", idgrp, "/projets/", id));
                 return ret;
             }
         }
@@ -44,15 +43,10 @@ namespace Projets.WS.Controllers
         {
             using (var client = manager.GetClient())
             {
-                var redisProjet = client.As<BeanProjet>();
-                var valDb = new BeanProjet
-                {
-                    Id = redisProjet.GetNextSequence(),
-                    Groupe  = string.Concat("/groupesdeprojets/", idgrp),
-                    Libelle = value.Libelle,
-                    IsClosed = value.IsClosed,
-                };
-                client.Store(valDb);
+                var redisBeanProjet = client.As<BeanProjet>();
+                value.Id = redisBeanProjet.GetNextSequence();
+                value.Groupe = string.Concat("/groupesdeprojets/", idgrp);
+                client.Set(string.Concat("/groupesdeprojets/", idgrp, "/projets/", value.Id), value);
             }
         }
         [HttpPut("{id}")]
@@ -60,11 +54,20 @@ namespace Projets.WS.Controllers
         {
             using (var client = manager.GetClient())
             {
-                var redisProjet = client.As<BeanProjet>();
-                var valdb = redisProjet.GetById(id);
+                var key = string.Concat("/groupesdeprojets/", idgrp, "/projets/", id);
+                var valdb = client.Get<BeanProjet>(key);
                 valdb.Libelle = value.Libelle;
                 valdb.IsClosed = value.IsClosed;
-                client.Store(valdb);
+                client.Set(key, valdb);
+            }
+        }
+        [HttpDelete]
+        public void Delete(int idgrp)
+        {
+            using (var client = manager.GetClient())
+            {
+                var keys = client.SearchKeys(string.Concat("/groupesdeprojets/", idgrp, "/projets/[0-9]*"));
+                client.RemoveAll(keys);
             }
         }
         [HttpDelete("{id}")]
@@ -72,8 +75,8 @@ namespace Projets.WS.Controllers
         {
             using (var client = manager.GetClient())
             {
-                var redisBeanGroupeDeProjets = client.As<BeanProjet>();
-                redisBeanGroupeDeProjets.DeleteById(id);
+                var key = string.Concat("/groupesdeprojets/", idgrp, "/projets/", id);
+                client.Remove(key);
             }
         }
     }
