@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Projets.Bean;
 using ServiceStack.Redis;
 using System;
@@ -10,8 +11,14 @@ namespace Projets.WS.Controllers
     [Route("api/GroupesDeProjets/{idgrp}/[controller]")]
     public class ProjetsController
     {
-        RedisManagerPool manager = new RedisManagerPool("localhost:6379?db=4");
-        //RedisManagerPool manager = new RedisManagerPool("redis:6379?db=4");
+        RedisManagerPool manager;
+        public ProjetsController(IConfiguration configuration)
+        {
+            var valuefromconf = configuration.GetValue<string>("MyConfig:RedisConnectionString");
+            if (null == valuefromconf)
+                throw new ArgumentNullException("Dans le appsettings.json, on doit trouver la clé suivante pour une config du server redis MyConfig:RedisConnectionString => redis:6379?db=4");
+            manager = new RedisManagerPool(valuefromconf);
+        }
         [HttpGet]
         public IEnumerable<string> Get(int idgrp)
         {
