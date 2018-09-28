@@ -53,6 +53,19 @@ namespace Projets.WS.Controllers
                 client.Store(valdb);
             }
         }
+        [HttpDelete]
+        public void Delete()
+        {
+            using (var client = manager.GetClient())
+            {
+                var redisBeanProjet = client.As<BeanProjet>();
+                var redisBeanGroupeDeProjets = client.As<BeanGroupeDeProjets>();
+                redisBeanProjet.DeleteAll();
+                redisBeanProjet.SetSequence(0);
+                redisBeanGroupeDeProjets.DeleteAll();
+                redisBeanGroupeDeProjets.SetSequence(0);
+            }
+        }
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
