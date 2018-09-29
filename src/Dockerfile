@@ -15,5 +15,6 @@ RUN dotnet publish -c Release -o out
 # build runtime image
 FROM microsoft/aspnetcore-build:2.0
 WORKDIR /app
+ARG ASPNETCORE_ENVIRONMENT="Docker"
 COPY --from=build-env /src/Projets.WS/out .
 ENTRYPOINT ["dotnet", "Projets.WS.dll"]
