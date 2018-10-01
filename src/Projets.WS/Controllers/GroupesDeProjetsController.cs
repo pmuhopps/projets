@@ -4,6 +4,8 @@ using Projets.Bean;
 using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Projets.WS.Controllers
 {
@@ -24,8 +26,8 @@ namespace Projets.WS.Controllers
         {
             using (var client = manager.GetClient())
             {
-                var keys = client.SearchKeys("/groupesdeprojets/[0-9]*");
-                return keys;
+                var keys = client.SearchKeys("/groupesdeprojets/*");
+                return keys.Where(r=>Regex.IsMatch(r, "/groupesdeprojets/\\d+$"));
             }
         }
         [HttpGet("{id}")]
