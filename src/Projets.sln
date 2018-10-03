@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projets.Bean", "Projets.Bean\Projets.Bean.csproj", "{5E82F1E9-4887-4405-8029-658F073D660A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projets.WS", "Projets.WS\Projets.WS.csproj", "{B6883858-D06C-4D5F-B879-788475865B9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projets.WS", "Projets.WS\Projets.WS.csproj", "{B6883858-D06C-4D5F-B879-788475865B9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projets.BatchIndexProjetOpen", "Projets.BatchIndexProjetOpen\Projets.BatchIndexProjetOpen.csproj", "{87BF226B-A751-4BF2-BAC5-3B7BD0704083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B6883858-D06C-4D5F-B879-788475865B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6883858-D06C-4D5F-B879-788475865B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6883858-D06C-4D5F-B879-788475865B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87BF226B-A751-4BF2-BAC5-3B7BD0704083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BF226B-A751-4BF2-BAC5-3B7BD0704083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BF226B-A751-4BF2-BAC5-3B7BD0704083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BF226B-A751-4BF2-BAC5-3B7BD0704083}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
