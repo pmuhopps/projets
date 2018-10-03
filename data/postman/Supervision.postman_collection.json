@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "c4a3791f-215d-4fba-92ed-b12d5fffe2a9",
+		"name": "Supervision",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "projets",
+			"item": [
+				{
+					"name": "groupesdeprojets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de23234f-7f80-411e-8fb1-20edc4d6a3c4",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"isjson\", function () {",
+									"    var jsonData = pm.response.json();",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{projects}}api/groupesdeprojets",
+							"host": [
+								"{{projects}}api"
+							],
+							"path": [
+								"groupesdeprojets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
